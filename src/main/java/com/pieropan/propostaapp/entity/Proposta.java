@@ -1,7 +1,15 @@
 package com.pieropan.propostaapp.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_proposta")
 public class Proposta {
@@ -13,7 +21,7 @@ public class Proposta {
 
     private int prazoPagamento;
 
-    private Boolean aprovado;
+    private Boolean aprovada;
 
     private boolean integrada;
 
