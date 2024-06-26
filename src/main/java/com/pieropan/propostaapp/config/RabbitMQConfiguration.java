@@ -23,8 +23,8 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Queue criarFilaPropostaPendenteMsAnaliseNotificacao(){
-        return QueueBuilder.durable("proposta-pendente.ms-analise-notificacao").build();
+    public Queue criarFilaPropostaPendenteMsNotificacao(){
+        return QueueBuilder.durable("proposta-pendente.ms-notificacao").build();
     }
 
     @Bean
@@ -33,7 +33,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Queue criarFilaPropostaConcluidaPendenteMsAnaliseNotificacao(){
+    public Queue criarFilaPropostaConcluidaMsAnaliseNotificacao(){
         return QueueBuilder.durable("proposta-concluida.ms-notificacao").build();
     }
 
@@ -59,7 +59,7 @@ public class RabbitMQConfiguration {
 
     @Bean
     public Binding criarBindingPropostaPendenteMsNotificacao(){
-        return  BindingBuilder.bind(criarFilaPropostaPendenteMsAnaliseNotificacao()).to(criarFanoutExchangePropostaPendente());
+        return  BindingBuilder.bind(criarFilaPropostaPendenteMsNotificacao()).to(criarFanoutExchangePropostaPendente());
     }
 
     @Bean
