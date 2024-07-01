@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_proposta")
 public class Proposta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
