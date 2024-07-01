@@ -1,4 +1,4 @@
-package com.pieropan.propostaapp.dto;
+package com.pieropan.propostaapp.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,10 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
-@Getter
 @NoArgsConstructor
+@Getter
 @Setter
-public class PropostaRequestDTO {
+public class PropostaResponseDTO {
+
+    private Long id;
 
     private String nome;
 
@@ -21,7 +23,11 @@ public class PropostaRequestDTO {
 
     private Double renda;
 
-    private Double valorSolicitado;
+    private String valorSolicitadoFmt;
 
     private int prazoPagamento;
+
+    private Boolean aprovada;
+
+    private String observacao;
 }

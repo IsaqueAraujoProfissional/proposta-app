@@ -11,19 +11,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-
 @Component
 public class PropostaSemIntegracao {
 
-    private PropostaRepository propostaRepository;
+    private final PropostaRepository propostaRepository;
 
-    private NotificacaoRabbitService notificacaoRabbitService;
+    private final NotificacaoRabbitService notificacaoRabbitService;
 
-    private String exchange;
+    private final String exchange;
 
     private final Logger logger = LoggerFactory.getLogger(PropostaSemIntegracao.class);
 
-    public PropostaSemIntegracao(PropostaRepository propostaRepository, NotificacaoRabbitService notificacaoRabbitService,
+    public PropostaSemIntegracao(PropostaRepository propostaRepository,
+                                 NotificacaoRabbitService notificacaoRabbitService,
                                  @Value("${rabbitmq.propostapendente.exchange}") String exchange) {
         this.propostaRepository = propostaRepository;
         this.notificacaoRabbitService = notificacaoRabbitService;
@@ -31,20 +31,18 @@ public class PropostaSemIntegracao {
     }
 
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
-    public void buscarPropostaSemIntegracao(){
-        propostaRepository.findAllByIntegradaIsFalse().forEach(
-                proposta -> {
-                    try {
-                        notificacaoRabbitService.notificar(proposta, exchange);
-                        atualizarProposta(proposta);
-                    }catch (RuntimeException ex){
-                        logger.error(ex.getMessage());
-                    }
-                }
-        );
+    public void buscarPropostasSemIntegracao() {
+        propostaRepository.findAllByIntegradaIsFalse().forEach(proposta -> {
+            try {
+                notificacaoRabbitService.notificar(proposta, exchange);
+                atualizarProposta(proposta);
+            } catch (RuntimeException ex) {
+                logger.error(ex.getMessage());
+            }
+        });
     }
 
-    private void atualizarProposta(Proposta proposta){
+    private void atualizarProposta(Proposta proposta) {
         proposta.setIntegrada(true);
         propostaRepository.save(proposta);
     }

@@ -1,7 +1,7 @@
 package com.pieropan.propostaapp.mapper;
 
-import com.pieropan.propostaapp.dto.PropostaRequestDTO;
-import com.pieropan.propostaapp.dto.PropostaResponseDTO;
+import com.pieropan.propostaapp.DTO.PropostaRequestDTO;
+import com.pieropan.propostaapp.DTO.PropostaResponseDTO;
 import com.pieropan.propostaapp.entity.Proposta;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,7 +24,7 @@ public interface PropostaMapper {
     @Mapping(target = "aprovada", ignore = true)
     @Mapping(target = "integrada", constant = "true")
     @Mapping(target = "observacao", ignore = true)
-    Proposta convertDtoToProposta(PropostaRequestDTO propostaRequestDTO);
+    Proposta convertDTOToProposta(PropostaRequestDTO propostaRequestDTO);
 
     @Mapping(target = "nome", source = "usuario.nome")
     @Mapping(target = "sobrenome", source = "usuario.sobrenome")
@@ -32,10 +32,11 @@ public interface PropostaMapper {
     @Mapping(target = "cpf", source = "usuario.cpf")
     @Mapping(target = "renda", source = "usuario.renda")
     @Mapping(target = "valorSolicitadoFmt", expression = "java(setValorSolicitadoFmt(proposta))")
-    PropostaResponseDTO convertEntityToDto(Proposta proposta);
-    List<PropostaResponseDTO> convertListEntityToListDto(Iterable<Proposta> propostas);
+    PropostaResponseDTO convertEntityToDTO(Proposta proposta);
 
-    default String setValorSolicitadoFmt(Proposta proposta){
+    List<PropostaResponseDTO> convertListEntityToListDTO(Iterable<Proposta> propostas);
+
+    default String setValorSolicitadoFmt(Proposta proposta) {
         return NumberFormat.getCurrencyInstance().format(proposta.getValorSolicitado());
     }
 }
